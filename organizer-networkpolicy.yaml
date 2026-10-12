@@ -1,0 +1,19 @@
+# Namespaced allow rule; app: agent matches the workshop's agent convention.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: afterplay-to-vllm
+spec:
+  podSelector:
+    matchLabels:
+      app: vllm
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: agent
+              component: afterplay
+      ports:
+        - protocol: TCP
+          port: 8000

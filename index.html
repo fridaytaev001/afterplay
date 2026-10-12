@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Afterplay — an opponent that remembers</title><link rel="stylesheet" href="/style.css"></head>
+<body><div class="shell">
+<header><a class="brand" href="/" aria-label="Afterplay home"><span class="brand-mark">A</span>AFTERPLAY<span class="brand-sub">ADAPTIVE QUORIDOR</span></a><div id="connection" class="connection"><i></i>Connecting…</div></header>
+<main>
+<div class="intro"><div><p class="eyebrow">THE NEXT OPPONENT REMEMBERS.</p><h1>Your habits.<br>Their next move.</h1><p class="subtitle">Race across the board. Place walls. See whether an opponent that remembers your playstyle makes different decisions.</p></div><div class="round-badge"><span id="round-number">01</span><small>SAVED ROUNDS<br><b id="saved-count">0</b></small></div></div>
+<div id="notice" class="notice" role="status" hidden></div>
+<div class="layout">
+<section class="arena panel"><div class="panel-head"><div><span class="eyebrow">LIVE MATCH</span><h2 id="turn">Your turn</h2></div><span id="ply" class="muted">Turn 1</span></div>
+<div class="players"><div><span class="dot teal"></span> YOU <strong id="your-walls">10 walls</strong></div><div><span class="dot coral"></span> OPPONENT <strong id="ai-walls">10 walls</strong></div></div>
+<div class="board-wrap"><svg id="board" viewBox="0 0 640 640" aria-label="Quoridor board" role="group"></svg></div>
+<div class="toolbar" aria-label="Choose your action"><button id="move-tool" class="tool active" data-tool="move">Move pawn</button><button class="tool" data-tool="h">Horizontal wall</button><button class="tool" data-tool="v">Vertical wall</button></div>
+<p class="hint" id="board-hint">Click a highlighted square. Reach the top row to win.</p>
+<div class="arena-bottom"><span id="distances">Routes: —</span><button id="retry-ai" hidden>Retry opponent</button><button id="new-game" class="quiet">New match</button><button id="save-round" class="quiet">Save &amp; restart</button></div></section>
+<aside class="sidebar">
+<section class="panel"><div class="panel-head"><div><span class="eyebrow">OPPONENT MEMORY</span><h2>What carries forward</h2></div><span class="pill">PERSISTENT</span></div>
+<label class="field-label" for="condition">Live opponent history</label><select id="condition"><option value="both">Both recent rounds</option><option value="none">No history</option><option value="one">Recent round 1 only</option><option value="two">Recent round 2 only</option></select>
+<div id="memory" class="memory empty">No saved history yet. Finish a match, or explicitly save an unfinished round.</div>
+<div class="footnote">Memory updates between rounds. Qwen's weights stay unchanged. “Round 1 / 2” means the two most recently saved rounds.</div><button id="reset-memory" class="text-button">Clear history and restart</button></section>
+<section class="panel decision-panel"><div class="panel-head"><div><span class="eyebrow">LATEST DECISION</span><h2>The opponent's move</h2></div><span id="decision-source" class="pill">—</span></div><p id="decision-reason" class="reason">Make your first move to hear from your opponent.</p><div class="decision-meta"><span id="decision-time">—</span><span id="decision-history">—</span></div></section>
+<section class="panel compact"><span class="eyebrow">HOW TO PLAY</span><p>Move one square or place one wall per turn. Jump over an adjacent pawn when possible. Every player must keep a route to their goal.</p><p class="muted">You start at the bottom. The opponent starts at the top. The first pawn across wins.</p></section>
+</aside></div>
+<section class="panel experiment"><div class="panel-head"><div><span class="eyebrow">CONTROLLED COMPARISON</span><h2>One board. Four memories.</h2><p class="muted">Four concurrent decisions. Identical board, candidates, model and settings. Different historical context.</p></div><button id="compare" class="primary">Compare decisions <span>↗</span></button></div>
+<div id="comparison" class="comparison"><div class="placeholder">No history</div><div class="placeholder">Round 1</div><div class="placeholder">Round 2</div><div class="placeholder">Both rounds</div></div>
+<p class="footnote" id="comparison-note">Recommendations do not change the match. Different choices alone do not establish better gameplay.</p></section>
+<section class="panel benchmark"><div class="panel-head"><div><span class="eyebrow">OWN YOUR INFERENCE</span><h2>Put the GPU to work.</h2><p class="muted">Send decision requests from independent synthetic board positions to the same Qwen server.</p></div><div class="benchmark-controls"><select id="concurrency" aria-label="Concurrent requests"><option value="4">4 requests</option><option value="8">8 requests</option><option value="32">32 requests</option></select><button id="benchmark" class="primary">Run benchmark</button></div></div><div id="benchmark-results" class="benchmark-results"><p class="muted">Results will show measured decision latency, throughput and available vLLM cache metrics.</p></div><p class="footnote">A small load test, not a win-rate evaluation. Context lengths vary; repeat identical runs after warm-up. Cache usage is not GPU compute utilization.</p></section>
+</main><footer><span>AFTERPLAY / AKAMAI GPU WORKSHOP</span><span>Rules on CPU. Opponent decisions on Qwen.</span></footer></div><script src="/app.js"></script></body></html>
